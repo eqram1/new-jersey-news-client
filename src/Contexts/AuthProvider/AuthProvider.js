@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 // import { getAuth } from "firebase/auth";>5
-import { getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import app from '../../Firebase/Firebase.config';
 export const AuthContext = createContext();
 
@@ -12,8 +12,12 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     const googleProviderLogin = (googleProvider) => {
-        // signInWithPopup(auth, provider)>5
+        // signInWithPopup(auth, provider)>google-5 no
         return signInWithPopup(auth, googleProvider)
+    }
+    const logOut = () => {
+        // signOut(auth)>google-last
+        return signOut(auth)
     }
     // useEffect collect from stack overflow (how can i declare useeffect in react)
     // useEffect(() => {
@@ -29,7 +33,7 @@ const AuthProvider = ({ children }) => {
         return () => { unsubscribe() }
     }, []);
 
-    const authInfo = { user, googleProviderLogin }
+    const authInfo = { user, googleProviderLogin, logOut }
     return (
         <AuthContext.Provider value={authInfo}>
             {children}

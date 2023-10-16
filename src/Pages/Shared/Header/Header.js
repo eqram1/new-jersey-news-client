@@ -7,9 +7,20 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../Contexts/AuthProvider/AuthProvider';
 import { Image } from 'react-bootstrap';
 import { FaUser } from 'react-icons/fa';
+import Button from 'react-bootstrap/Button';
 
 const Header = () => {
-    const { user } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext)
+    const handleLogOut = () => {
+        logOut()
+            // collect from firebase google last logout
+            .then(() => {
+
+            })
+            .catch((error) => {
+
+            });
+    }
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary mb-3">
             <Container>
@@ -32,19 +43,32 @@ const Header = () => {
                         </NavDropdown>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
-                        <Nav.Link eventKey={2} href="#memes">
-                            {/* <FaUser></FaUser> */}
+                        <Nav.Link href="#deets">
                             {
+                                user?.uid ?
+                                    <>
+                                        <span className='me-3'>{user?.displayName}</span>
+                                        <Button onClick={handleLogOut} variant="secondary">Logout</Button>
+                                    </>
+                                    :
+                                    <>
+                                        <Link className='me-3' to='/login'>Login</Link>
+                                        <Link to='/register'>Register</Link>
+                                    </>
+                            }
+
+                        </Nav.Link>
+                        <Nav.Link eventKey={2} href="#memes">
+                            {/* {
                                 <Image style={{ height: '30px' }} roundedCircle
                                     src={user?.photoURL}></Image>
-                            }
-                            {/* {user.photoURL ?
-                                < Image style={{ height: '30px' }} roundedCircle
-                                    src={user.photoURL}></Image>
+                            } */}
+                            {user?.photoURL ?
+                                <Image style={{ height: '30px' }} roundedCircle
+                                    src={user?.photoURL}></Image>
                                 :
                                 <FaUser></FaUser>
-                            } */}
+                            }
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
