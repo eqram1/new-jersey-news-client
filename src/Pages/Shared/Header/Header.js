@@ -34,16 +34,22 @@ const Header = () => {
                     <Nav>
                         <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
                         <Nav.Link eventKey={2} href="#memes">
-                            {user.photoURL ?
-                                <Image style={{ height: '30px' }} roundedCircle src={user.photoURL}></Image>
+                            {/* <FaUser></FaUser> */}
+                            {
+                                <Image style={{ height: '30px' }} roundedCircle
+                                    src={user?.photoURL}></Image>
+                            }
+                            {/* {user.photoURL ?
+                                < Image style={{ height: '30px' }} roundedCircle
+                                    src={user.photoURL}></Image>
                                 :
                                 <FaUser></FaUser>
-                            }
+                            } */}
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
-        </Navbar>
+        </Navbar >
     );
 };
 
