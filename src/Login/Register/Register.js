@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
 const Register = () => {
+    const [error, setError] = useState('')
     const { createUser } = useContext(AuthContext)
+
     const handleSubmit = event => {
         event.preventDefault()
         const form = event.target;
@@ -19,10 +21,12 @@ const Register = () => {
             .then((result) => {
                 const user = result.user;
                 console.log(user)
+                setError('')
                 form.reset()
             })
             .catch((error) => {
                 console.error(error)
+                setError(error.message)
             });
     }
     return (
@@ -47,7 +51,7 @@ const Register = () => {
                 Register
             </Button>
             <Form.Text className="text-danger">
-                Password must be 10 characters long
+                {error}
             </Form.Text>
         </Form>
     );
